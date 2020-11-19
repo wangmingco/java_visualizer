@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Java 可视化</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="assets/css/animejs.css" rel="stylesheet">
+    <link href="assets/css/anime-theme.css" rel="stylesheet">
+    <link href="assets/css/documentation.css" rel="stylesheet">
+    <script type="text/javascript" src="assets/js/anime/anime.2.2.0.js"></script>
+
+</head>
+<body>
+<div class="content">
+    <header class="header">
+        <a class="logo" href="https://github.com/juliangarnier/anime/">
+            <span class="demo-title">Java 可视化</span>
+        </a>
+    </header>
+
+    <section class="pane sidebar">
+        <nav class="navigation"></nav>
+
+    </section>
+    <section class="pane demos">
+
+        <!-- 多线程工具 -->
+        <article id="targets" class="color-targets">
+            <header>
+                <h2 class="demos-title">多线程同步工具</h2>
+            </header>
+
+            <div id="countDownLatchDemo" class="demo">
+                <!-- info信息 -->
+                <h3 class="demo-title">CountDownLatch</h3>
+
+                <div class="demo-description">
+
+                  <p>CountDownLatch 演示.</p>
+                  <p class="bubble warning">三个线程测试CountDownLatch.</p>
+                    <table>
+                        <thead>
+                        <td>初始值</td>
+                        <td>动态值</td>
+                        </thead>
+                        <tr>
+                            <td><code>2</code></td>
+                            <td><code id="value1">2</code></td>
+                        </tr>
+                    </table>
+                </div>
+                <!--  示例代码  -->
+                <div class="demo-content css-selector-demo">
+                    <div id="countdownlatch">
+                        <div class="square t1"></div>
+                        <div class="square t2"></div>
+                        <div class="square t3"></div>
+                    </div>
+                    <div class="controls">
+                        <button class="restart">Restart</button>
+                    </div>
+
+                </div>
+
+                <script>
+
+                  var append = function (txt) {
+                    var value1 = document.getElementById("value1")
+                    console.info(value1)
+                    value1.innerText = "3"
+
+                    var a = document.createElement("a");
+                    a.innerText = txt
+
+                    // var countdownlatchRunning = document.getElementById("countdownlatchRunning")
+                    // countdownlatchRunning.appendChild(content);
+
+                  }
+
+                  var countDownLatchDemo = function () {
+                    window.value1.innerText = "3"
+                    console.info(window.value1)
+
+                        var countDownLatchTimeLine = anime.timeline({
+                            easing: 'easeOutExpo',
+                            duration: 750
+                        });
+
+                        countDownLatchTimeLine.add({
+                            targets: '#countdownlatch .t1',
+                            translateX: 100,
+                            duration: 3000,
+                            begin: function (anim) {
+                                // append("线程1开始运行");
+                            },
+                            complete: function (anim) {
+                                append("线程1开始await")
+                            }
+
+                        }).add({
+                            targets: '#countdownlatch .t2',
+                            translateX: 100,
+                            duration: 3000,
+                            delay: 1500,
+                            begin: function (anim) {
+                                append("线程2开始运行")
+                            },
+                            complete: function (anim) {
+                                append("线程2 countdown")
+                            }
+                        }).add({
+                            targets: '#countdownlatch .t3',
+                            translateX: 100,
+                            duration: 3000,
+                            delay: 1500,
+                            begin: function (anim) {
+                                append("线程3开始运行")
+                            },
+                            complete: function (anim) {
+                                append("线程3 countdown")
+                            }
+                        }).add({
+                            targets: '#countdownlatch .t1',
+                            translateX: 200,
+                            duration: 3000,
+                            delay: 1500,
+                            begin: function (anim) {
+                                append("线程1继续运行")
+                            },
+                            complete: function (anim) {
+                                append("所有线程运行结束")
+                            }
+                        })
+                        ;
+                        document.querySelector('.controls .restart').onclick = countDownLatchTimeLine.restart;
+                    }
+                </script>
+
+            </div>
+
+
+        </article>
+        <!-- -->
+
+
+    </section>
+
+    <section class="pane demo-info">
+        <header class="description-header">
+            <h2><span></span></h2>
+        </header>
+        <div class="info-output"></div>
+    </section>
+</div>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<script src="assets/js/vendors/highlight.pack.js"></script>
+<script src="assets/js/vendors/beautify-html.js"></script>
+<script src="assets/js/documentation.js"></script>
+</body>
+</html>
